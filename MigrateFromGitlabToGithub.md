@@ -35,6 +35,8 @@ remote: Please see https://docs.github.com/get-started/getting-started-with-git/
 fatal: Échec d'authentification pour 'https://github.com/votre_login/votre_repository.git/'
 ```
 
+Voir [ici](#error-on-git-push) comment gérer cette erreur.
+
 5. Delete origin :
 ```bash
 git remote remove origin
@@ -60,4 +62,24 @@ rm -rf projectToMigrate
 mv projectToMigrateGithub projectToMigrate
 ```
 
-## Erreur
+## Error on git push
+
+Pour gérer l'erreur suite à la commande "git push --mirror github", procéder comme suit :
+
+1. Connectez-vous à votre compte GitHub.
+2. Allez dans Settings (Paramètres) en cliquant sur votre avatar en haut à droite, puis sur Developer settings (Paramètres de développeur) dans le menu de gauche.
+3. Sélectionnez Personal access tokens (Tokens d'accès personnel), puis cliquez sur Generate new token (Générer un nouveau token).
+4. Donnez un nom à votre token, sélectionnez les scopes nécessaires (par exemple, repo pour accéder aux repositories privés et publics).
+5. Cliquez sur Generate token en bas de la page.
+6. Copiez le token généré et conservez-le en lieu sûr (vous ne pourrez plus le voir une fois la page fermée).
+7. Retournez à votre terminal en local dans le dossier projectToMigrateGithub
+8. Ajoutez ou mettez à jour le remote github en incluant le PAT dans l'URL :
+```bash
+git remote set-url github https://<your_token>@github.com/votre_login/votre_repository.git
+```
+Remplacez <your_token> par le token que vous avez généré.
+
+9. Maintenant, vous pouvez réessayer de pousser le repository :
+```bash
+git push --mirror github
+```
